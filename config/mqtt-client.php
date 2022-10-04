@@ -17,7 +17,7 @@ return [
     |
     */
 
-    'default_connection' => 'default',
+    'default_connection' => 'private',
 
     /*
     |--------------------------------------------------------------------------
@@ -31,7 +31,10 @@ return [
     */
 
     'connections' => [
-
+        'private' => [
+            'host' => env('MQTT_HOST'),
+            'port' => env('MQTT_PORT', 1883),
+        ],
         'default' => [
 
             // The host and port to which the client shall connect.

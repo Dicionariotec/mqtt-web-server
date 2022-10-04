@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Message;
+use Exception;
 use PhpMqtt\Client\Facades\MQTT;
 
 class ReceiveMessage extends Command
@@ -34,6 +35,15 @@ class ReceiveMessage extends Command
         $mqtt->subscribe('MainChannel', function (string $topic, string $message) {
             echo sprintf('Receiving');
 
+            try {
+                $message = Message::create([
+                    'topic' => $topic,
+                    'content' => $message
+                ]);
+            }catch(Exception $e) {
+                echo $e->getMessage();
+            }
+            
             $message = Message::create([
                 'topic' => $topic,
                 'content' => $message

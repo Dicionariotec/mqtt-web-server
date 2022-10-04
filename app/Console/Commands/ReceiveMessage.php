@@ -30,14 +30,18 @@ class ReceiveMessage extends Command
     public function handle()
     {
         $mqtt = MQTT::connection();
+
         $mqtt->subscribe('MainChannel', function (string $topic, string $message) {
+            echo sprintf('Receiving');
+
             $message = Message::create([
                 'topic' => $topic,
-                'message' => $message
+                'content' => $message
             ]);
 
             echo sprintf('Received QoS level 1 message on topic [%s]: %s', $topic, $message);
         }, 1);
+
         $mqtt->loop(true);
 
         return Command::SUCCESS;

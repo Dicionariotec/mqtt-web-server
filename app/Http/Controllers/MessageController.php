@@ -15,7 +15,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::all();
+        $messages = Message::simplePaginate(30);;
         return response()->view('message.index', ['messages' => $messages]);
     }
 

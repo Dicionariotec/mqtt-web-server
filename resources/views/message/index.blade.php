@@ -19,7 +19,7 @@
 					<th scope="row">{{ $message->id }}</th>
 					<td>{{ $message->content['temperature'] }}</td>
 					<td>{{ $message->content['humidity'] }}</td>
-					<td>{{ $message->created_at->format('Y/m/d H:m:s') }}</td>
+					<td>{{ $message->created_at->format('Y/m/d H:i:s') }}</td>
 				</tr>
 			@endforeach
 		</tbody>

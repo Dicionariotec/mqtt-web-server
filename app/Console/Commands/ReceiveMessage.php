@@ -32,16 +32,21 @@ class ReceiveMessage extends Command
     {
         $mqtt = MQTT::connection();
 
-        $mqtt->subscribe('MainChannel', function (string $topic, string $message) {
+        $mqtt->subscribe('MainChannel', function (string $topic, string $message) use ($mqtt) {
             echo sprintf("Receiving\n");
             
             $message = Message::create([
                 'topic' => $topic,
                 'content' => $message
             ]);
+
+            if ($message->exists()) {
+                $mqtt->interrupt();
+            }
         }, 1);
 
         $mqtt->loop(true);
+        $mqtt->disconnect();
 
         return Command::SUCCESS;
     }

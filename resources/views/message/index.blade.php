@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
 	<h1>Messages</h1>
-	<h1>{{ now()->format('Y/m/d H:m:s') }}</h1>
+	<h1>{{ now()->format('Y/m/d H:i:s') }}</h1>
 	<table class="table">
 		<thead>
 			<tr>

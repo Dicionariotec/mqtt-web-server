@@ -15,8 +15,27 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $messages = Message::orderByDesc('created_at')->simplePaginate(30);
-        return response()->view('message.index', ['messages' => $messages]);
+        $messages = Message::orderByDesc('created_at')->simplePaginate(15);
+
+        $data = $messages->items();
+        $collectedData = collect($data);
+        $contents = $collectedData->pluck('content');
+        $collectedContents =  collect($contents);
+
+        $temperatures = $collectedContents->pluck('temperature');
+        $humidities = $collectedContents->pluck('humidity');
+        $datetimes = $collectedData->pluck('created_at');
+
+        $formattedDatetimes = $datetimes->map(function ($datetime, $key) {
+            return $datetime->format('H:i:s');;
+        });
+        
+        return response()->view('message.index', [
+            'messages' => $messages,
+            'keys' => $formattedDatetimes,
+            'temperatures' => $temperatures,
+            'humidities' => $humidities
+        ]);
     }
 
     /**

@@ -4,6 +4,20 @@
 <div class="container">
 	<h1>Messages</h1>
 	<h1>{{ now()->format('Y/m/d H:i:s') }}</h1>
+	<div class="row">
+		<div class="col-sm-8">
+			<canvas id="chart"></canvas>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+
+	<script type="module">
+		let id = 'chart';
+		let labels = @json($keys);
+		let temperatures = @json($temperatures);
+		let humidities = @json($humidities);
+		make_chart(id, labels, temperatures, humidities);
+	</script>
 	<table class="table">
 		<thead>
 			<tr>
